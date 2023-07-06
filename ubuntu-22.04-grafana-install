@@ -11,13 +11,11 @@ echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com st
 
 apt update -y
 
-apt-get install grafana
+apt-get install grafana -y
 
-mkdir $HOME/grafana-data
+mkdir -p $HOME/grafana-data
 
-touch /etc/systemd/system/promtail.service
-
-cat <<EOF>> /etc/systemd/system/promtail.service
+cat <<EOF> /etc/systemd/system/promtail.service
 [Unit]
 Description=Promtail Service
 After=network.target
