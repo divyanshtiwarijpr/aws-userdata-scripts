@@ -1,32 +1,22 @@
 #!/bin/bash
-apt update -y 
-apt dist-upgrade -y
+# Update the system
+apt-get update -y 
+apt-get dist-upgrade -y
 
-apt install apt-transport-https -y
-apt install software-properties-common wget -y
-
+# Install required packages
+apt-get install -y apt-transport-https
+apt-get install -y software-properties-common wget
 wget -q -O /usr/share/keyrings/grafana.key https://apt.grafana.com/gpg.key
 
+# Add repo for stable releases
 echo "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main" | tee -a /etc/apt/sources.list.d/grafana.list
 
-apt update -y
-
+# Insatll Grafana
+apt-get update -y
 apt-get install grafana -y
 
-mkdir -p $HOME/grafana-data
+# Run Grafana on boot 
 
-cat <<EOF> /etc/systemd/system/promtail.service
-[Unit]
-Description=Promtail Service
-After=network.target
-
-[Service]
-Type=simple 
-User=root
-ExecStart=$HOME/grafana-data/promtail-linux-amd64 -config.file /home/ubuntu/promtail-local-config.yaml
-
-[Install]
-WantedBy=multi-user.target
-EOF
+systemctl enable --now grafana-server.service
 
 
