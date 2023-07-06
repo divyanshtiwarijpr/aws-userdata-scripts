@@ -13,5 +13,22 @@ apt update -y
 
 apt-get install grafana
 
+mkdir $HOME/grafana-data
+
+touch /etc/systemd/system/promtail.service
+
+cat <<EOF>> /etc/systemd/system/promtail.service
+[Unit]
+Description=Promtail Service
+After=network.target
+
+[Service]
+Type=simple 
+User=root
+ExecStart=$HOME/grafana-data/promtail-linux-amd64 -config.file /home/ubuntu/promtail-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 
