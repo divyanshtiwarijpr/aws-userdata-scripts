@@ -2,8 +2,10 @@
 # Update the system
 apt-get update -y 
 apt-get dist-upgrade -y
+apt install unzip -y
 
 mkdir /lokidl
+chown ubuntu:ubuntu /lokidl
 cd /lokidl
 
 curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/loki-linux-amd64.zip"
