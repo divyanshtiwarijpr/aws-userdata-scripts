@@ -3,6 +3,9 @@
 apt-get update -y 
 apt-get dist-upgrade -y
 
+mkdir /lokidl
+cd /lokidl
+
 curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/loki-linux-amd64.zip"
 # Extract the binary
 unzip "loki-linux-amd64.zip"
