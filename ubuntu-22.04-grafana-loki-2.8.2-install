@@ -1,0 +1,13 @@
+#!/bin/bash
+# Update the system
+apt-get update -y 
+apt-get dist-upgrade -y
+
+curl -O -L "https://github.com/grafana/loki/releases/download/v2.8.2/loki-linux-amd64.zip"
+# Extract the binary
+unzip "loki-linux-amd64.zip"
+# make sure it is executable
+chmod a+x "loki-linux-amd64"
+
+wget https://raw.githubusercontent.com/grafana/loki/main/cmd/loki/loki-local-config.yaml
+wget https://raw.githubusercontent.com/grafana/loki/main/clients/cmd/promtail/promtail-local-config.yaml
