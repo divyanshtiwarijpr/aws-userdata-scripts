@@ -14,3 +14,5 @@ chmod a+x "loki-linux-amd64"
 
 wget https://raw.githubusercontent.com/grafana/loki/main/cmd/loki/loki-local-config.yaml
 wget https://raw.githubusercontent.com/grafana/loki/main/clients/cmd/promtail/promtail-local-config.yaml
+
+./loki-linux-amd64 -config.file=loki-local-config.yaml
