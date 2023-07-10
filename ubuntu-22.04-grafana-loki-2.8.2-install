@@ -55,6 +55,7 @@ ExecStart=/lokidl/promtail-linux-amd64 -config.file /lokidl/promtail-local-confi
 WantedBy=multi-user.target
 EOF
 
+systemctl enable --now promtail.service
 
 
 
