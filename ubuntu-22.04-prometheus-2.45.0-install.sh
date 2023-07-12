@@ -2,8 +2,9 @@
 sudo apt update -y 
 sudo apt dist-upgrade -y
 
-# Create a service user for prometheus 
-sudo useradd --no-create-home --shell /sbin/nologin prometheus
+# Create a service user for Prometheus 
+sudo groupadd --system prometheus
+sudo useradd -s /sbin/nologin --system -g prometheus prometheus
 
 # Create config folder and assign proper permissions
 sudo mkdir /etc/prometheus 
@@ -19,22 +20,25 @@ cd data
 curl -LO  https://github.com/prometheus/prometheus/releases/download/v2.45.0/prometheus-2.45.0.linux-amd64.tar.gz
 tar -xvzf prometheus-2.45.0.linux-amd64.tar.gz
 
-# Copy touser path
-sudo cp prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/
-sudo cp prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
+# Copy binary files and config file
+sudo mv prometheus-2.45.0.linux-amd64/prometheus /usr/local/bin/
+sudo mv prometheus-2.45.0.linux-amd64/promtool /usr/local/bin/
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
 
-sudo cp -r prometheus-2.45.0.linux-amd64/consoles /etc/prometheus/
-sudo cp -r prometheus-2.45.0.linux-amd64/console_libraries /etc/prometheus/
+sudo mv -r prometheus-2.45.0.linux-amd64/consoles /etc/prometheus/
+sudo mv -r prometheus-2.45.0.linux-amd64/console_libraries /etc/prometheus/
+sudo mv prometheus-2.45.0.linux-amd64/prometheus.yml /etc/prometheus/
 
-sudo cp prometheus-2.45.0.linux-amd64/prometheus.yml /etc/prometheus/
-sudo chown prometheus:prometheus /etc/prometheus/prometheus.yml
+sudo chown prometheus:prometheus /etc/prometheus
+sudo chown -R prometheus:prometheus /etc/prometheus/consoles
+sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
+sudo chown -R prometheus:prometheus /var/lib/prometheus
 
 # Create systemd service file
 sudo tee /etc/systemd/system/prometheus.service << EOF
 [Unit]
-Description=Prometheus Service
+Description=Prometheus
 Wants=network-online.target
 After=network-online.target
 
@@ -55,5 +59,5 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable --now prometheus
-
+sudo systemctl status prometheus
 
