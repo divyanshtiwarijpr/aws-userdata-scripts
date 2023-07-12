@@ -59,5 +59,4 @@ EOF
 
 sudo systemctl daemon-reload
 sudo systemctl enable --now prometheus
-sudo systemctl status prometheus
 
