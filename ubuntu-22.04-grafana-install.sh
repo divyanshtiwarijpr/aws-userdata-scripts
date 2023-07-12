@@ -18,7 +18,7 @@ apt-get install grafana -y
 # Run Grafana on boot 
 systemctl enable --now grafana-server.service
 
-# Take backup of main Grafana Config
-# cp /etc/grafana/grafana.ini /etc/grafana/grafana.ini.dtbak
+# Take backup of main Grafana config
+cp /etc/grafana/grafana.ini /etc/grafana/grafana.ini.dtbak
 
 

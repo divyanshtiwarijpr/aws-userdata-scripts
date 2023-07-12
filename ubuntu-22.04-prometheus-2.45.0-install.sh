@@ -3,7 +3,7 @@ sudo apt update -y
 sudo apt dist-upgrade -y
 
 # Create a service user for prometheus 
-sudo useradd --no-create-home --shell /bin/false prometheus
+sudo useradd --no-create-home --shell /sbin/nologin prometheus
 
 # Create config folder and assign proper permissions
 sudo mkdir /etc/prometheus 
