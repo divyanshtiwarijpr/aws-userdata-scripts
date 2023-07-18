@@ -46,7 +46,7 @@ mkdir /tmp/prom
 cd /tmp/prom
 
 # Download essential files
-curl -LO  https://github.com/prometheus/prometheus/releases/download/$PROMVER/prometheus-$PROMVER.linux-amd64.tar.gz
+curl -LO  https://github.com/prometheus/prometheus/releases/download/v$PROMVER/prometheus-$PROMVER.linux-amd64.tar.gz
 tar -xvzf prometheus-$PROMVER.linux-amd64.tar.gz
 
 # Copy binary files and config file
@@ -55,8 +55,8 @@ sudo mv prometheus-$PROMVER.linux-amd64/promtool /usr/local/bin/
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
 
-sudo mv -r prometheus-$PROMVER.linux-amd64/consoles /etc/prometheus/
-sudo mv -r prometheus-$PROMVER.linux-amd64/console_libraries /etc/prometheus/
+sudo mv prometheus-$PROMVER.linux-amd64/consoles /etc/prometheus/
+sudo mv prometheus-$PROMVER.linux-amd64/console_libraries /etc/prometheus/
 sudo mv prometheus-$PROMVER.linux-amd64/prometheus.yml /etc/prometheus/
 
 sudo chown prometheus:prometheus /etc/prometheus
