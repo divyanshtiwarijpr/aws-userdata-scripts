@@ -38,14 +38,14 @@ cp /etc/grafana/grafana.ini /etc/grafana/grafana.ini.dtbak
 
 # PROMETHEUS
 # Create a service user for Prometheus 
-sudo groupadd --system prometheus
-sudo useradd -s /sbin/nologin --system -g prometheus prometheus
+groupadd --system prometheus
+useradd -s /sbin/nologin --system -g prometheus prometheus
 
 # Create config folder and assign proper permissions
-sudo mkdir /etc/prometheus
-sudo mkdir /var/lib/prometheus
-sudo chown prometheus:prometheus /etc/prometheus
-sudo chown prometheus:prometheus /var/lib/prometheus
+mkdir /etc/prometheus
+mkdir /var/lib/prometheus
+chown prometheus:prometheus /etc/prometheus
+chown prometheus:prometheus /var/lib/prometheus
 
 # Create temporary directories and download essential files and extract them
 mkdir /tmp/prometheusdl
@@ -55,22 +55,22 @@ curl -LO  https://github.com/prometheus/prometheus/releases/download/v$PROMVER/p
 tar -xvzf prometheus-$PROMVER.linux-amd64.tar.gz
 
 # Copy binary files and config files and set proper permissions
-sudo mv prometheus-$PROMVER.linux-amd64/prometheus /usr/local/bin/
-sudo mv prometheus-$PROMVER.linux-amd64/promtool /usr/local/bin/
-sudo chown prometheus:prometheus /usr/local/bin/prometheus
-sudo chown prometheus:prometheus /usr/local/bin/promtool
+mv prometheus-$PROMVER.linux-amd64/prometheus /usr/local/bin/
+mv prometheus-$PROMVER.linux-amd64/promtool /usr/local/bin/
+chown prometheus:prometheus /usr/local/bin/prometheus
+chown prometheus:prometheus /usr/local/bin/promtool
 
-sudo mv prometheus-$PROMVER.linux-amd64/consoles /etc/prometheus/
-sudo mv prometheus-$PROMVER.linux-amd64/console_libraries /etc/prometheus/
-sudo mv prometheus-$PROMVER.linux-amd64/prometheus.yml /etc/prometheus/
+mv prometheus-$PROMVER.linux-amd64/consoles /etc/prometheus/
+mv prometheus-$PROMVER.linux-amd64/console_libraries /etc/prometheus/
+mv prometheus-$PROMVER.linux-amd64/prometheus.yml /etc/prometheus/
 
-sudo chown prometheus:prometheus /etc/prometheus
-sudo chown -R prometheus:prometheus /etc/prometheus/consoles
-sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
-sudo chown -R prometheus:prometheus /var/lib/prometheus
+chown prometheus:prometheus /etc/prometheus
+chown -R prometheus:prometheus /etc/prometheus/consoles
+chown -R prometheus:prometheus /etc/prometheus/console_libraries
+chown -R prometheus:prometheus /var/lib/prometheus
 
 # Create systemd service file
-sudo tee /etc/systemd/system/prometheus.service << EOF
+tee /etc/systemd/system/prometheus.service << EOF
 [Unit]
 Description=Prometheus
 Wants=network-online.target
