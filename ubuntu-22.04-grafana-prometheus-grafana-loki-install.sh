@@ -171,7 +171,7 @@ wget https://raw.githubusercontent.com/grafana/loki/main/clients/cmd/promtail/pr
 
 # Copy binary files and config files 
 mkdir /etc/promtail
-mv promtail-inux-amd64 /usr/local/bin
+mv promtail-linux-amd64 /usr/local/bin
 mv promtail-local-config.yaml /etc/promtail
 
 # Create systemd service for Promtail
