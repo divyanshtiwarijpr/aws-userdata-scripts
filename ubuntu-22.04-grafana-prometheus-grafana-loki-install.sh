@@ -109,9 +109,6 @@ rm -rf /tmp/prometheusdl
 # Install the required packages
 apt install unzip -y
 
-# Create config folder and assign proper permissions
-sudo mkdir /etc/grafana-loki
-
 # Create temporary directories and download essential files and extract them
 mkdir /tmp/lokidl
 cd /tmp/lokidl
@@ -122,11 +119,10 @@ wget https://raw.githubusercontent.com/grafana/loki/main/cmd/loki/loki-local-con
 unzip "loki-linux-amd64.zip"
 
 # Copy binary files and config files 
-mv loki-linux-amd64 /usr/local/bin
-
 mkdir /etc/grafana-loki
-mv loki-local-config.yaml /etc/grafana-loki
 
+mv loki-linux-amd64 /usr/local/bin
+mv loki-local-config.yaml /etc/grafana-loki
 
 # Make sure it is executable
 chmod a+x "/usr/local/bin/loki-linux-amd64"
@@ -140,7 +136,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStart=/usr/local/bin/loki-linux-amd64 -config.file /letc/grafana-loki/loki-local-config.yaml
+ExecStart=/usr/local/bin/loki-linux-amd64 -config.file /etc/grafana-loki/loki-local-config.yaml
 
 [Install]
 WantedBy=multi-user.target
@@ -175,10 +171,11 @@ wget https://raw.githubusercontent.com/grafana/loki/main/clients/cmd/promtail/pr
 
 # Copy binary files and config files 
 mkdir /etc/promtail
+mv promtail-inux-amd64 /usr/local/bin
 mv promtail-local-config.yaml /etc/promtail
 
 # Create systemd service for Promtail
-tee /etc/systemd/system/promtail.service<<EOF
+tee /etc/systemd/system/promtail.service << EOF
 [Unit]
 Description=Promtail Service
 After=network.target
