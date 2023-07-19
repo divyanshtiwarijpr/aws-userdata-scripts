@@ -201,3 +201,6 @@ rm -rf /tmp/promtaildl
 
 
 
+
+# Reboot as system was updated
+reboot
